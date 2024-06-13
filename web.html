@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP4 File Hosting</title>
+    <style>
+        .file-item {
+            margin-bottom: 20px;
+        }
+        .embed-container {
+            display: none;
+            margin-top: 10px;
+        }
+        .embed-code {
+            width: 100%;
+            padding: 10px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>MP4 File Hosting</h1>
+    <ul id="file-list"></ul>
+
+    <script>
+        const files = [
+            'file1.mp4',
+            'file2.mp4'
+            // Add more filenames here
+        ];
+
+        const fileList = document.getElementById('file-list');
+
+        files.forEach(file => {
+            const li = document.createElement('li');
+            li.className = 'file-item';
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = file;
+            downloadLink.download = file;
+            downloadLink.textContent = `Download ${file}`;
+            
+            const embedLink = document.createElement('button');
+            embedLink.textContent = 'Share Embed';
+            embedLink.onclick = () => toggleEmbedContainer(file);
+
+            const embedContainer = document.createElement('div');
+            embedContainer.className = 'embed-container';
+            embedContainer.id = `embed-${file}`;
+            
+            const embedCode = document.createElement('textarea');
+            embedCode.className = 'embed-code';
+            embedCode.readOnly = true;
+            embedCode.value = `<video width="320" height="240" controls>\n  <source src="https://yourusername.github.io/mp4-file-hosting/${file}" type="video/mp4">\n  Your browser does not support the video tag.\n</video>`;
+
+            embedContainer.appendChild(embedCode);
+
+            li.appendChild(downloadLink);
+            li.appendChild(document.createTextNode(' ')); // Add space between buttons
+            li.appendChild(embedLink);
+            li.appendChild(embedContainer);
+
+            fileList.appendChild(li);
+        });
+
+        function toggleEmbedContainer(file) {
+            const embedContainer = document.getElementById(`embed-${file}`);
+            embedContainer.style.display = embedContainer.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
